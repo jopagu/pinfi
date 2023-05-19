@@ -7,12 +7,12 @@
 #include <iostream>
 #include <time.h>
 
-KNOB<string> instcount_file(KNOB_MODE_WRITEONCE, "pintool",
+KNOB<std::string> instcount_file(KNOB_MODE_WRITEONCE, "pintool",
     "o", "pin.instcount.txt", "specify instruction count file name");
 
-KNOB<string> fioption(KNOB_MODE_WRITEONCE, "pintool", "fioption", "", "specify fault injection option: all, sp, fp, ccs");
+KNOB<std::string> fioption(KNOB_MODE_WRITEONCE, "pintool", "fioption", "", "specify fault injection option: all, sp, fp, ccs");
 
-KNOB<string> fi_activation_file (KNOB_MODE_WRITEONCE, "pintool",
+KNOB<std::string> fi_activation_file (KNOB_MODE_WRITEONCE, "pintool",
     "fi_activation", "activate", "specify fault injection activation file");
 
 KNOB<BOOL> fiecc(KNOB_MODE_WRITEONCE, "pintool", "e", "0", "enbale ecc error injection");
@@ -305,7 +305,7 @@ VOID FI_SetSTContextReg (CONTEXT* ctxt, REG reg, UINT32 reg_num)
 		i = rand() % MAX_ST_NUM;
 	}
 	else {
-		string reg_name = REG_StringShort(reg);
+		std::string reg_name = REG_StringShort(reg);
 		i = reg_name[reg_name.size() - 1] - '0';
 	}
 	
@@ -348,7 +348,7 @@ VOID FI_SetSTContextReg (CONTEXT* ctxt, REG reg, UINT32 reg_num)
 VOID FI_SetXMMContextReg (CONTEXT* ctxt, REG reg, UINT32 reg_num)
 {
 	//choose XMM[i] to inject
-	string reg_name = REG_StringShort(reg);
+	std::string reg_name = REG_StringShort(reg);
 	UINT32 i = reg_name[reg_name.size() - 1] - '0';
 	
 	CHAR fpContextSpace[FPSTATE_SIZE];
@@ -402,7 +402,7 @@ VOID FI_SetXMMContextReg (CONTEXT* ctxt, REG reg, UINT32 reg_num)
 VOID FI_SetYMMContextReg (CONTEXT* ctxt, REG reg, UINT32 reg_num)
 {
 	//choose YMM[i] to inject
-	string reg_name = REG_StringShort(reg);
+	std::string reg_name = REG_StringShort(reg);
 	UINT32 i = reg_name[reg_name.size() - 1] - '0';
 	
 	CHAR fpContextSpace[FPSTATE_SIZE];

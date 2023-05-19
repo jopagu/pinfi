@@ -15,6 +15,21 @@ static const string STORE = "store";
 
 static string configfile = "pin.config.instselector.txt";
 
+int Tokenize(string str, string arr[], int arr_length){
+  char* s = &str[0];
+  int i = 0;
+  for (; i < arr_length; i++){
+    char* tok = strtok(s, " ");
+    if(tok != NULL){
+      arr[i] = tok;
+    }else{
+      break;
+    }
+  }
+  return i;
+}
+
+
 
 bool _isLoadInst(INS ins) {
   string opcode = INS_Mnemonic(ins);

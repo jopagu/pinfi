@@ -13,10 +13,10 @@
 //#define NOSTACKFRAMEOP
 //#define ONLYFP
 
-KNOB<string> instcategory_file(KNOB_MODE_WRITEONCE, "pintool",
+KNOB<std::string> instcategory_file(KNOB_MODE_WRITEONCE, "pintool",
     "o", "pin.instcategory.txt", "output file to store instruction categories");
 
-static std::map<string, std::set<string>* > category_opcode_map;
+static std::map<std::string, std::set<std::string>* > category_opcode_map;
 
 // Pin calls this function every time a new instruction is encountered
 VOID CountInst(INS ins, VOID *v)
@@ -60,9 +60,9 @@ VOID CountInst(INS ins, VOID *v)
 
 #endif
 
-  string cate = CATEGORY_StringShort(INS_Category(ins));
+  std::string cate = CATEGORY_StringShort(INS_Category(ins));
   if (category_opcode_map.find(cate) == category_opcode_map.end()) {
-    category_opcode_map.insert(std::pair<string, std::set<string>* >(cate, new std::set<string>));  
+    category_opcode_map.insert(std::pair<std::string, std::set<std::string>* >(cate, new std::set<std::string>));  
   }
   category_opcode_map[cate]->insert(INS_Mnemonic(ins));
 }
@@ -71,16 +71,16 @@ VOID CountInst(INS ins, VOID *v)
 VOID Fini(INT32 code, VOID *v)
 {
     // Write to a file since cout and cerr maybe closed by the application
-    ofstream OutFile;
+    std::ofstream OutFile;
     OutFile.open(instcategory_file.Value().c_str());
-    OutFile.setf(ios::showbase);
+    OutFile.setf(std::ios::showbase);
     
-    for (std::map<string, std::set<string>* >::iterator it = category_opcode_map.begin();
+    for (std::map<std::string, std::set<std::string>* >::iterator it = category_opcode_map.begin();
       it != category_opcode_map.end(); ++it) {
     OutFile << it->first << std::endl;  
-    for (std::set<string>::iterator it2 = it->second->begin();
+    for (std::set<std::string>::iterator it2 = it->second->begin();
          it2 != it->second->end(); ++it2) {
-      OutFile << "\t" << *it2 << endl;  
+      OutFile << "\t" << *it2 << std::endl;  
     }
   }
 
@@ -92,8 +92,8 @@ VOID Fini(INT32 code, VOID *v)
 /* ===================================================================== */
 
 INT32 Usage() {
-    cerr << "This tool collects the instruction categories/opcode in the program" << endl;
-    cerr << endl << KNOB_BASE::StringKnobSummary() << endl;
+    std::cerr << "This tool collects the instruction categories/opcode in the program" << std::endl;
+    std::cerr << std::endl << KNOB_BASE::StringKnobSummary() << std::endl;
     return -1;
 }
 

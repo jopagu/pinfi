@@ -17,7 +17,7 @@
 //#define NOSTACKFRAMEOP
 //#define ONLYFP
 
-KNOB<string> instcount_file(KNOB_MODE_WRITEONCE, "pintool",
+KNOB<std::string> instcount_file(KNOB_MODE_WRITEONCE, "pintool",
     "o", "pin.instcount.txt", "specify instruction count file name");
 	
 static UINT64 fi_all = 0;
@@ -122,13 +122,13 @@ VOID CountInst(INS ins, VOID *v)
 VOID Fini(INT32 code, VOID *v)
 {
     // Write to a file since cout and cerr maybe closed by the application
-    ofstream OutFile;
+    std::ofstream OutFile;
     OutFile.open(instcount_file.Value().c_str());
-    OutFile.setf(ios::showbase);
-    OutFile <<"AllInst:"<< fi_all << endl;
-	OutFile <<"CCSavedInst:"<< fi_ccs  << endl;
-	OutFile << "SPInst:"<< fi_sp << endl;
-    OutFile << "FPInst:"<< fi_bp << endl;
+    OutFile.setf(std::ios::showbase);
+    OutFile <<"AllInst:"<< fi_all << std::endl;
+	OutFile <<"CCSavedInst:"<< fi_ccs  << std::endl;
+	OutFile << "SPInst:"<< fi_sp << std::endl;
+    OutFile << "FPInst:"<< fi_bp << std::endl;
     
 	OutFile.close();
 }
@@ -139,8 +139,8 @@ VOID Fini(INT32 code, VOID *v)
 
 INT32 Usage()
 {
-    cerr << "This tool counts the number of dynamic instructions executed" << endl;
-    cerr << endl << KNOB_BASE::StringKnobSummary() << endl;
+    std::cerr << "This tool counts the number of dynamic instructions executed" << std::endl;
+    std::cerr << std::endl << KNOB_BASE::StringKnobSummary() << std::endl;
     return -1;
 }
 
